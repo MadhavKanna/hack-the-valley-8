@@ -6,13 +6,6 @@ const mediaSchema = new Schema({
     data: Binary
 })
 
-// const userSchema = new Schema({
-//     name: String, 
-//     email: String, // email is userID
-// })
-
 const Media = model('Media', mediaSchema);
-
-// const User = model('User', userSchema);
 
 module.exports = { Media };
