@@ -2,42 +2,21 @@ import { useState, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import { Link } from 'expo-router';
 import { Camera } from 'expo-camera';
-import {  } from 'axios';
+import axios from 'axios';
 
 
 import { COLORS } from '../constants';
 
 export default CameraApp = () => {
     let cameraRef = useRef();
-    const [hasCameraPermission, setHasCameraPermission] = useState();
-    const [permission, requestPermission] = Camera.useCameraPermissions();
     const [photo, setPhoto] = useState();
+    const [data, setData] = useState("");
+    const [error, setError] = useState();
+    const baseURL = "https://hack-the-valley-8-87a6bbeaf441.herokuapp.com/"
+    const endpoint = "classify";
 
-    useEffect(() => {
-        (async () => {
-            const cameraPermission = await Camera.requestCameraPermissionsAsync();
-            setHasCameraPermission(cameraPermission.status === 'granted');
-        })();
-    }, []);
-
-    if (hasCameraPermission === undefined) {
-        return <Text>Requesting permissions...</Text>;
-    }
-    else if (!hasCameraPermission) {
-        return <Text>Permission for camera was not granted. Please change in settings.</Text>
-    }
-
-    if (!permission) {
-        return <View alignItems="center" justifyContent="center">
-            <Text>Permission not granted</Text>
-            <TouchableOpacity onPress={requestPermission} title="Request permission" />
-        </View>;
-    }
-    if (!permission.granted) {
-        return <View alignItems="center" justifyContent="center">
-            <Text>Permission not granted</Text>
-            <Button onPress={requestPermission} title="Request permission" />
-        </View>;
+    if(error) {
+        alert(error);
     }
 
     async function takePicture() {
@@ -50,14 +29,32 @@ export default CameraApp = () => {
         let photo = await cameraRef.current.takePictureAsync();
         photo.options = options;
         setPhoto(photo)
+
+        async function request() {
+            const response = await axios.post(`${baseURL}${endpoint}`, { userId: "ABCDFGH", data: photo.base64 });
+            console.log(response);
+            return response;
+        }
+
+        try {
+            const response = await request();
+            const text = `This item is: ${response["data"]}`;
+            setData(text);
+        } catch (error) {
+            setError(error);
+        }
+
     }
 
     if (photo) {
-        let currentPhoto = photo;;
+        let currentPhoto = photo;
 
         return (
         <View style={ {flex: 1} }>
             <Image source={{uri: currentPhoto.uri}} style={{flex: 2, resizeMode: "contain"}} />
+            <View style={ {flex: 1, width: "100%", justifyContent: "center", alignItems: "center"} }>
+                <Text>{ data }</Text>
+            </View>
             <TouchableOpacity onPress={() => setPhoto(undefined)} style={{borderColor: "black", borderWidth: 1, flex: 1, width: "100%", backgroundColor: COLORS.lightWhite, justifyContent: "center"}}>
                 <View style={ {justifyContent: "center", alignItems: "center"} }>
                     <Text>Go Back</Text>

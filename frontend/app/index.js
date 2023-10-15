@@ -1,12 +1,12 @@
 import { View, Text, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import { Link } from 'expo-router';
-import {  } from 'axios';
-
 
 import { COLORS } from '../constants';
 
 export default Home = () => {
+    const userID = 12345;
 
+    
     return (    
         <View style={ {flex: 1, width: "100%"} }>
             <Link href="/CameraApp" asChild style={{flex: 1, width: "100%"}}>
