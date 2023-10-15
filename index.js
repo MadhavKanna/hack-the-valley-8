@@ -3,7 +3,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const { dataApiRouter } = require('./routes/data-api');
 const { classifyApiRouter } = require('./routes/classify-api');
-const BSON = require('bson');
+const { paymentRouter } = require('./routes/payment-api');
 
 const mongoose = require('mongoose');
 const { json } = require('body-parser');
@@ -11,7 +11,7 @@ const { json } = require('body-parser');
 app.use(json());
 app.use(dataApiRouter);
 app.use(classifyApiRouter);
-
+app.use([paymentRouter]);
 const dotenv = require('dotenv');
 dotenv.config();
 
