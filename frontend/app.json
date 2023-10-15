@@ -5,7 +5,12 @@
       "bundler": "metro"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      ["expo-camera",
+        {
+          "cameraPermission": "Allow Recycle.AI to access your camera."
+        }
+      ]
     ],
     "name": "frontend",
     "slug": "frontend"
