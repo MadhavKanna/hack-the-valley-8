@@ -5,15 +5,12 @@ const predictionMap = {
     0: 'Organic Waste', 1: 'Recyclable'
 }
 classifyApiRouter.post("/classify", [], async function (req, res) {
-    // const modelInfo = await tf.node.getMetaGraphsFromSavedModel('../model.json');
-    // console.log(modelInfo);
-    // const model = await tf.loadLayersModel('../model.json');
-
+    // const model = await tf.node.loadSavedModel(, [['server']], ['__saved']);
+    // const output = model.predict(input);
     // res.send({
     //     class: predictionMap[predictions]
     // })
-    const response = { data: 'Organic Waste' };
-    res.send(JSON.stringify(response));
+    res.send("Organic Waste");
 });
 
 
