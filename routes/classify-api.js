@@ -12,6 +12,7 @@ classifyApiRouter.post("/classify", [], async function (req, res) {
     // res.send({
     //     class: predictionMap[predictions]
     // })
+    res.send("in progress please wait");
 });
 
 
