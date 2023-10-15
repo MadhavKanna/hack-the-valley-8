@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const { dataApiRouter } = require('./routes/data-api');
 const { classifyApiRouter } = require('./routes/classify-api');
 const BSON = require('bson');
@@ -15,10 +15,6 @@ app.use(classifyApiRouter);
 const dotenv = require('dotenv');
 dotenv.config();
 
-let daBaby = {
-    name: "daBaby image",
-    data: BSON.serialize()
-}
 
 mongoose.connect('mongodb+srv://' + process.env.userNameMongo + ':' + process.env.mongodbPass + '@clusterhtv8.ss6gzh9.mongodb.net/?retryWrites=true&w=majority',
 ).then(
